@@ -12,7 +12,6 @@ module Language.Foveran.Parsing
     where
 
 import           Prelude hiding (map, lex, filter)
-import           Control.Monad.Error (Error (..))
 import           Data.Functor ((<$>))
 import qualified Data.ByteString as B
 import qualified Data.Text as T
@@ -42,9 +41,6 @@ data InputError
     | PE_ParsingError    (Maybe (Lexeme Token)) [Maybe Token]
     | PE_LayoutError     Span
 
-instance Error InputError where
-    
-  
 instance ParsingError Token InputError where
     parseError = PE_ParsingError
 

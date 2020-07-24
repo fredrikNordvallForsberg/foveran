@@ -42,6 +42,7 @@ module Data.BooleanAlgebra
     where
 
 import Prelude hiding (and, all, or, any)
+import Data.Semigroup
 
 -- | Boolean algebras.
 class BooleanAlgebra a where
@@ -85,9 +86,11 @@ instance (Applicative f, BooleanAlgebra ba) => BooleanAlgebra (f ba) where
 newtype Conjunctive a = Conjunctive { fromConjunctive :: a }
 
 -- | Treat the conjunctive structure of a boolean algebra as a monoid.
+instance BooleanAlgebra a => Semigroup (Conjunctive a) where
+    (Conjunctive x) <> (Conjunctive y) = Conjunctive (x .&. y)
 instance BooleanAlgebra a => Monoid (Conjunctive a) where
     mempty = Conjunctive one
-    mappend (Conjunctive x) (Conjunctive y) = Conjunctive (x .&. y)
+    mappend = (<>)
 
 -- | Use the '(.&.)' operation from a 'BooleanAlgebra' to combine all
 -- the elements of a 'Data.Foldable.Foldable' container type,
@@ -112,9 +115,11 @@ all f = fromConjunctive . foldMap (Conjunctive . f)
 newtype Disjunctive a = Disjunctive { fromDisjunctive :: a }
 
 -- | Treat the disjunctive structure of a boolean algebra as a monoid.
+instance BooleanAlgebra a => Semigroup (Disjunctive a) where
+    (Disjunctive x) <> (Disjunctive y) = Disjunctive (x .|. y)
 instance BooleanAlgebra a => Monoid (Disjunctive a) where
     mempty = Disjunctive zero
-    mappend (Disjunctive x) (Disjunctive y) = Disjunctive (x .|. y)
+    mappend = (<>)
 
 -- | Use the '(.|.)' operation from a 'BooleanAlgebra' to combine all
 -- the elements of a 'Data.Foldable.Foldable' container type,

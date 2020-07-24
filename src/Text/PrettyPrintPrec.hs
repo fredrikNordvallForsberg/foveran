@@ -14,6 +14,7 @@ module Text.PrettyPrintPrec
 import qualified Text.PrettyPrint as PP
 import           Text.PrettyPrint (Doc)
 import           Data.String
+import           Data.Semigroup
 
 -- FIXME: replicate the rest of the PrettyPrint interface
 
@@ -32,8 +33,8 @@ text s = fromString s
 empty :: PrecDoc
 empty = PrecDoc $ \_ -> PP.empty
 
-(<>) :: PrecDoc -> PrecDoc -> PrecDoc
-p1 <> p2 = PrecDoc $ \lev -> (PP.<>) (p1 `atPrecedenceLevel` lev) (p2 `atPrecedenceLevel` lev)
+instance Semigroup PrecDoc where
+    p1 <> p2 = PrecDoc $ \lev -> (PP.<>) (p1 `atPrecedenceLevel` lev) (p2 `atPrecedenceLevel` lev)
 
 (<+>) :: PrecDoc -> PrecDoc -> PrecDoc
 p1 <+> p2 = PrecDoc $ \lev -> (PP.<+>) (p1 `atPrecedenceLevel` lev) (p2 `atPrecedenceLevel` lev)

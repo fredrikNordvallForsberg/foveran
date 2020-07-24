@@ -18,7 +18,7 @@ module Data.SExpr
     )
     where
 
-import Text.PrettyPrint
+import Text.PrettyPrint as PP
 
 class ShowSExpr a where
     showSExpr :: a -> SExpr
@@ -36,7 +36,7 @@ cond clauses = SExpr (Atom "cond" : map (\(t,e) -> SExpr [ t, e]) clauses)
 pprint :: SExpr -> Doc
 pprint (Atom s)       = text s
 pprint (IntConst i)   = int i
-pprint (SExpr [])     = lparen <> rparen
+pprint (SExpr [])     = lparen PP.<> rparen
 pprint (SExpr [x])    = parens $ pprint x
 pprint (SExpr (Atom "defconst":x:xs)) 
     = parens $ (text "defconst" <+> pprint x)

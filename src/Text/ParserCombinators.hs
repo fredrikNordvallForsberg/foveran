@@ -4,7 +4,7 @@ module Text.ParserCombinators where
 
 import           Prelude hiding (head)
 import           Control.Monad
-import           Control.Monad.Error
+import           Control.Monad.Except
 import           Control.Applicative
 import           Text.Lexeme (Lexeme (..))
 import           Text.Position

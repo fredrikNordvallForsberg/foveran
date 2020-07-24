@@ -15,7 +15,7 @@ module Language.Foveran.Typing.Hole
     )
     where
 
-import           Text.PrettyPrint
+import           Text.PrettyPrint as PP
 
 import           Language.Foveran.Syntax.Identifier (Ident, UsesIdentifiers (..), runNameGenerationWith)
 import           Language.Foveran.Syntax.Checked (Term, bindFree, toDisplaySyntax)
@@ -60,10 +60,10 @@ makeHole localContext goal =
 -- Pretty printing of holes
 ppHole :: UsesIdentifiers names => names -> Ident -> HoleData -> Doc
 ppHole names holeIdentifier hole =
-    "?" <> ppIdent holeIdentifier <> ":"
-    <+> "[" <> sep [ sep (punctuate "," (reverse $ ppHoleContextMembers $ holeContext hole))
+    "?" PP.<> ppIdent holeIdentifier PP.<> ":"
+    <+> "[" PP.<> sep [ sep (punctuate "," (reverse $ ppHoleContextMembers $ holeContext hole))
                    , "|-"
-                   , ppHoleGoal (holeGoal hole) ] <> "]"
+                   , ppHoleGoal (holeGoal hole) ] PP.<> "]"
     where
       ppHoleContextMembers [] = []
       ppHoleContextMembers ((ident, ty):xs) =

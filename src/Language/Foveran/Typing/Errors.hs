@@ -10,7 +10,7 @@ module Language.Foveran.Typing.Errors
     )
     where
 
-import           Text.PrettyPrint
+import           Text.PrettyPrint as PP
 import           Language.Foveran.Syntax.Identifier (Ident, UsesIdentifiers, runNameGeneration)
 import qualified Language.Foveran.Syntax.LocallyNameless as LN
 import           Language.Foveran.Syntax.Checked (toDisplaySyntax)
@@ -102,7 +102,7 @@ ppTypeError ctxt (TermIsAnEquality ty)
     = "This term produces a value of equality type, but the context was expecting a term of type"
       $$ nest 4 (ppType ctxt ty)
 ppTypeError ctxt (SetLevelMismatch l1 l2)
-    = "Set level problem: 'Set" <+> int l1 <> "' does not have type 'Set" <+> int l2 <> "'"
+    = "Set level problem: 'Set" <+> int l1 PP.<> "' does not have type 'Set" <+> int l2 PP.<> "'"
 ppTypeError ctxt (TermIsAReturn ty)
     = "This term produces values of a labelled type, but the context was expecting a term of type"
       $$ nest 4 (ppType ctxt ty)
@@ -121,7 +121,7 @@ ppTypeError ctxt (ReflCanOnlyProduceEquality ty a b)
 
 -- Synthesis errors
 ppTypeError ctxt (UnknownIdentifier nm)
-    = "Unknown identifier" <+> "“" <> ppIdent nm <> "”"
+    = "Unknown identifier" <+> "“" PP.<> ppIdent nm PP.<> "”"
 ppTypeError ctxt (ExpectingPiType ty)
     = "Application of non function. Term has type"
       $$ nest 4 (ppType ctxt ty)
@@ -153,7 +153,7 @@ ppTypeError ctxt (CallOnNonLabelledType ty)
       $$ nest 4 (ppType ctxt ty)
 
 ppTypeError ctxt (UnableToSynthesise t)
-    = "Unable to synthesise type for this term: " <> text (show t)
+    = "Unable to synthesise type for this term: " PP.<> text (show t)
 ppTypeError ctxt (TypesNotEqual ty1 ty2)
     = "Expecting term to have type "
       $$ nest 4 (ppType ctxt ty1)
@@ -177,19 +177,19 @@ data DataDeclError
 
 ppDataDeclError :: DataDeclError -> Doc
 ppDataDeclError (DuplicateConstructorName ident)
-    = "Duplicate constructor name: '" <> ppIdent ident <> "'"
+    = "Duplicate constructor name: '" PP.<> ppIdent ident PP.<> "'"
 ppDataDeclError (DuplicateParameterName ident)
-    = "Duplicate parameter name: '" <> ppIdent ident <> "'"
+    = "Duplicate parameter name: '" PP.<> ppIdent ident PP.<> "'"
 ppDataDeclError (ShadowingDatatypeName)
     = "Shadowing of the data type's name in constructor definition"
 ppDataDeclError (ShadowingParameterName)
     = "Shadowing of a parameter name in constructor definition"
 ppDataDeclError (ConstructorTypesMustEndWithNameOfDatatype givenNm expectedNm)
-    = "Constructor types must end with the name of the datatype being defined: '" <> ppIdent expectedNm <> "', not '" <> ppIdent givenNm <> "'"
+    = "Constructor types must end with the name of the datatype being defined: '" PP.<> ppIdent expectedNm PP.<> "', not '" PP.<> ppIdent givenNm PP.<> "'"
 ppDataDeclError (NonMatchingParameterArgument givenNm expectedNm)
-    = "Parameter argument has incorrect name: should be '" <> ppIdent expectedNm <> "', not '" <> ppIdent givenNm <> "'"
+    = "Parameter argument has incorrect name: should be '" PP.<> ppIdent expectedNm PP.<> "', not '" PP.<> ppIdent givenNm PP.<> "'"
 ppDataDeclError (IllFormedArgument expectedNm)
-    = "Ill-formed parameter argument: should be '" <> ppIdent expectedNm <> "'"
+    = "Ill-formed parameter argument: should be '" PP.<> ppIdent expectedNm PP.<> "'"
 ppDataDeclError (TooManyArgumentsForDatatype)
     = "Too many arguments for data type in constructor declaration"
 ppDataDeclError (NotEnoughArgumentsForDatatype)

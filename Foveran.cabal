@@ -11,17 +11,67 @@ data-files:          elisp/mode-template.el
 Executable foveran
   Build-Depends: text >= 0.7.1.0,
                  containers >= 0.3.0.0,
-                 base >= 4,
+                 base >= 4.8,
                  array >= 0.3.0.0,
                  pretty,
                  th-lift >= 0.3,
                  bytestring >= 0.9.1.5,
                  template-haskell,
                  transformers >= 0.2.2.0,
-                 mtl >= 2.0.1.0,
+                 mtl >= 2.2.1,
                  blaze-html >= 0.3.2.0,
                  blaze-markup >= 0.5.1.0
   Main-Is:       Language/Foveran/Main.hs
-
+  Other-Modules: Data.BooleanAlgebra
+                 Data.CharSet
+                 Data.FiniteStateMachine
+                 Data.FiniteStateMachine.Deterministic
+                 Data.FiniteStateMachine.Deterministic.Elisp
+                 Data.FiniteStateMachine.RegexpDerivatives
+                 Data.FreeMonad
+                 Data.MonadicStream
+                 Data.Pair
+                 Data.RangeSet
+                 Data.Rec
+                 Data.SExpr
+                 Language.Foveran.Editor.EmacsMode
+                 Language.Foveran.Lexing.ByteString
+                 Language.Foveran.Lexing.Spec
+                 Language.Foveran.Lexing.Text
+                 Language.Foveran.Parsing
+                 Language.Foveran.Parsing.Layout
+                 Language.Foveran.Parsing.LexicalSpec
+                 Language.Foveran.Parsing.Parser
+                 Language.Foveran.Parsing.PrettyPrinter
+                 Language.Foveran.Parsing.Token
+                 Language.Foveran.Syntax.Checked
+                 Language.Foveran.Syntax.Display
+                 Language.Foveran.Syntax.Identifier
+                 Language.Foveran.Syntax.LocallyNameless
+                 Language.Foveran.SyntaxHighlight.Html
+                 Language.Foveran.Typing
+                 Language.Foveran.Typing.Assume
+                 Language.Foveran.Typing.Checker
+                 Language.Foveran.Typing.Context
+                 Language.Foveran.Typing.Conversion
+                 Language.Foveran.Typing.Conversion.Evaluation
+                 Language.Foveran.Typing.Conversion.Value
+                 Language.Foveran.Typing.DeclCheckMonad
+                 Language.Foveran.Typing.Definition
+                 Language.Foveran.Typing.DefinitionContext
+                 Language.Foveran.Typing.Errors
+                 Language.Foveran.Typing.Hole
+                 Language.Foveran.Typing.IDataDecl
+                 Language.Foveran.Typing.LocalContext
+                 Language.Foveran.Typing.Normalise
+                 Language.Foveran.Util.Emacs
+                 Language.Foveran.Util.Html
+                 Language.Foveran.Util.PrettyPrinting
+                 Language.Foveran.Util.Templater
+                 Text.Lexeme
+                 Text.ParserCombinators
+                 Text.Position
+                 Text.PrettyPrintPrec
+                 Paths_Foveran
   Hs-Source-Dirs:src
 

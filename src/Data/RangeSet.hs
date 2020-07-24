@@ -53,6 +53,7 @@ import qualified Data.Set as S
 import           Data.List (intercalate)
 import           Data.Maybe (fromJust)
 import           Data.BooleanAlgebra
+import           Data.Semigroup
 
 -- | A subset of the given type. Stored as a list of ranges.
 newtype Set a = Set { unSet :: [(a,a)] }
@@ -181,14 +182,16 @@ fromSet s
     | otherwise       = Partition (S.fromList [ s, Data.RangeSet.complement s ])
 
 -- | Intersection of partitions. FIXME: should be a lattice.
-instance (Enum a, Bounded a, Ord a) => Monoid (Partition a) where
-    mempty = Partition (S.fromList [ everything ])
-    mappend (Partition x) (Partition y) =
+instance (Enum a, Bounded a, Ord a) => Semigroup (Partition a) where
+    (Partition x) <> (Partition y) =
         Partition $ S.fromList [ i |
                                  a <- S.elems x
                                , b <- S.elems y
-                               , let i = a `intersect` b 
-                               , not (null i)] 
+                               , let i = a `intersect` b
+                               , not (null i)]
+instance (Enum a, Bounded a, Ord a) => Monoid (Partition a) where
+    mempty = Partition (S.fromList [ everything ])
+    mappend = (<>)
 
 --------------------------------------------------------------------------------
 -- FIXME: need a better representation than this Should be a balanced

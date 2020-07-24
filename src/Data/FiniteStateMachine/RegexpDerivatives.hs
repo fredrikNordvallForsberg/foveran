@@ -29,6 +29,7 @@ import           Data.String (IsString (..))
 import           Data.RangeSet
 import           Data.FiniteStateMachine (FiniteStateMachine (..))
 import           Control.Monad (guard)
+import           Data.Semigroup
 
 -- | Regular expressions over an arbitrary alphabet.
 data Regexp alphabet
@@ -54,9 +55,11 @@ instance Ord alphabet => BooleanAlgebra (Regexp alphabet) where
     zero       = nZero
 
 -- | Sequencing of regular expressions.
+instance Semigroup (Regexp alphabet) where
+    (<>) = (.>>.)
 instance Monoid (Regexp alphabet) where
     mempty  = NSeq []
-    mappend = (.>>.)
+    mappend = (<>)
     mconcat = NSeq
 
 {------------------------------------------------------------------------------}

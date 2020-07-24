@@ -6,11 +6,11 @@ module Language.Foveran.Util.PrettyPrinting
     )
     where
 
-import Text.PrettyPrint
+import Text.PrettyPrint as PP
 import Text.Position
 
 ppPos p =
-  text "line" <+> int (posLineNum p) <> comma <+> text "col" <+> int (posColumnNum p)
+  text "line" <+> int (posLineNum p) PP.<> comma <+> text "col" <+> int (posColumnNum p)
 
 ppSpan (Span l r) =
   text "from" <+> ppPos l <+> text "to" <+> ppPos r
